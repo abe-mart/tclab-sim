@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# TCLab Simulator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-fidelity digital twin of the [Temperature Control Lab (TCLab)](http://apmonitor.com/heat.htm), designed for process control education and experimentation.
 
-Currently, two official plugins are available:
+![TCLab Simulator Screenshot](https://raw.githubusercontent.com/jckantor/TCLab/master/images/tclab_board.jpg)
+*(Note: Replace with actual screenshot of the simulator)*
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## React Compiler
+This web-based simulator provides a realistic physics simulation of the TCLab hardware, allowing users to experiment with heat transfer dynamics and feedback control without needing the physical device. It models the two-heater, two-sensor system with configurable physics parameters.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+### 🔬 High-Fidelity Physics
+- **Realistic Heat Transfer**: Models convection, radiation, and conduction between heaters.
+- **Configurable Parameters**: Adjust heat transfer coefficient ($U$), mass, specific heat ($C_p$), heater power factors ($\alpha_1, \alpha_2$), emissivity ($\epsilon$), and ambient temperature.
+- **Dynamic Visualization**: 3D-style visualizer with real-time heat glow effects based on temperature and power.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🎛️ Control Systems
+- **Manual Control**: Direct slider control of Heater 1 (Q1) and Heater 2 (Q2) power (0-100%).
+- **PID Controller**: Built-in closed-loop PID controller with:
+  - Configurable gains ($K_p, K_i, K_d$)
+  - Individual setpoints for T1 and T2
+  - Anti-windup protection
+  - Smooth manual/auto switching
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 📊 Real-Time Analysis
+- **Live Plotting**: Interactive real-time graphs for Temperature (T1, T2) and Power (Q1, Q2).
+- **Time Window Selection**: View data for the last 1 minute, 5 minutes, 10 minutes, or the entire session.
+- **Data Export**: Download full simulation history as CSV for analysis in Python/MATLAB/Excel.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/tcsim.git
+   cd tcsim/webapp
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. **Run the simulator**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Physics Model
+
+The simulation solves the following energy balance equations in real-time:
+
+$$
+\frac{dT_1}{dt} = \frac{1}{m C_p} [ U A (T_a - T_1) + \epsilon \sigma A (T_a^4 - T_1^4) + Q_{C12} + Q_{R12} + \alpha_1 Q_1 ]
+$$
+
+$$
+\frac{dT_2}{dt} = \frac{1}{m C_p} [ U A (T_a - T_2) + \epsilon \sigma A (T_a^4 - T_2^4) - Q_{C12} - Q_{R12} + \alpha_2 Q_2 ]
+$$
+
+Where:
+- $Q_{C12}$ is conduction between heaters
+- $Q_{R12}$ is radiation between heaters
+
+## License
+
+MIT License
