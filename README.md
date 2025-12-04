@@ -2,7 +2,7 @@
 
 A high-fidelity digital twin of the [Temperature Control Lab (TCLab)](http://apmonitor.com/heat.htm), designed for process control education and experimentation.
 
-![TCLab Simulator Screenshot](https://raw.githubusercontent.com/jckantor/TCLab/master/images/tclab_board.jpg)
+![TCLab Simulator Screenshot](images/screenshot.png)
 *(Note: Replace with actual screenshot of the simulator)*
 
 ## Overview
