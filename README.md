@@ -34,8 +34,9 @@ This web-based simulator provides a realistic physics simulation of the TCLab ha
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/tcsim.git
-   cd tcsim/webapp
+   ```bash
+   git clone https://github.com/abe-mart/tclab-sim.git
+   cd tclab-sim
    ```
 
 2. **Install dependencies**
