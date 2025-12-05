@@ -299,26 +299,35 @@ export const Dashboard: React.FC = () => {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-900/20 rounded-full blur-[120px]" />
             </div>
 
-            <header className="w-full max-w-full flex flex-col md:flex-row justify-between items-center border-b border-white/5 pb-3 z-10 backdrop-blur-sm bg-[#0f172a]/50 sticky top-0 px-3 rounded-b-xl">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
-                        <Activity className="text-white w-5 h-5" />
+            <header className="w-full max-w-full flex flex-col md:flex-row justify-between items-center border-b border-white/5 pb-3 z-50 backdrop-blur-sm bg-[#0f172a]/50 md:sticky md:top-0 px-3 rounded-b-xl gap-3 md:gap-0">
+                <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+                            <Activity className="text-white w-5 h-5" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl font-black tracking-tighter text-white">
+                                TCLab <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Sim</span>
+                            </h1>
+                            <p className="text-slate-400 text-[10px] md:text-xs font-medium hidden sm:block">High-Fidelity Digital Twin</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-2xl font-black tracking-tighter text-white">
-                            TCLab <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Simulator</span>
-                        </h1>
-                        <p className="text-slate-400 text-xs font-medium">High-Fidelity Process Control Digital Twin</p>
+
+                    {/* Mobile-only status indicator */}
+                    <div className="md:hidden flex items-center gap-2 bg-white/5 px-2 py-1 rounded-lg border border-white/10">
+                        <div className={`w-2 h-2 rounded-full ${paused ? 'bg-yellow-500' : 'bg-green-500 animate-pulse'}`} />
+                        <span className="text-xs font-mono text-white">{time.toFixed(0)}s</span>
                     </div>
                 </div>
-                <div className="text-right mt-3 md:mt-0 flex items-center gap-4">
+
+                <div className="w-full md:w-auto flex flex-wrap justify-between md:justify-end items-center gap-2 md:gap-4">
                     {/* Time Window Selector */}
-                    <div className="flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5">
+                    <div className="flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5 flex-1 md:flex-none justify-center">
                         {TIME_WINDOWS.map((window) => (
                             <button
                                 key={window.label}
                                 onClick={() => setPlotWindow(window.value)}
-                                className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${plotWindow === window.value
+                                className={`px-2 md:px-3 py-1 text-[10px] md:text-xs font-medium rounded-md transition-all flex-1 md:flex-none text-center ${plotWindow === window.value
                                     ? 'bg-blue-600 text-white shadow-sm'
                                     : 'text-slate-400 hover:text-white hover:bg-white/5'
                                     }`}
@@ -331,34 +340,36 @@ export const Dashboard: React.FC = () => {
                     <div className="flex items-center gap-1.5">
                         <button
                             onClick={() => setPaused(!paused)}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
+                            className="p-2 md:p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
                             title={paused ? "Resume" : "Pause"}
                         >
                             {paused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
                         </button>
                         <button
                             onClick={handleReset}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
+                            className="p-2 md:p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
                             title="Reset Simulation"
                         >
                             <RotateCcw className="w-4 h-4" />
                         </button>
                         <button
                             onClick={handleExport}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
+                            className="p-2 md:p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
                             title="Export Full History"
                         >
                             <Download className="w-4 h-4" />
                         </button>
                         <button
                             onClick={() => setSettingsOpen(true)}
-                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
+                            className="p-2 md:p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10"
                             title="Settings"
                         >
                             <Settings className="w-4 h-4" />
                         </button>
                     </div>
-                    <div className="flex flex-col items-end border-l border-white/10 pl-4">
+
+                    {/* Desktop Clock */}
+                    <div className="hidden md:flex flex-col items-end border-l border-white/10 pl-4">
                         <div className="text-xs text-slate-500 font-bold tracking-wider uppercase flex items-center gap-1">
                             <Clock className="w-3 h-3" /> Simulation Time
                         </div>
@@ -500,7 +511,7 @@ export const Dashboard: React.FC = () => {
                 {/* Right Column: Plots & Stats */}
                 <div className="xl:col-span-7 flex flex-col gap-3">
                     <div className="bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl p-4 flex flex-col gap-3 h-full">
-                        <div className="flex-grow min-h-[250px] flex flex-col gap-4">
+                        <div className="flex-grow min-h-[400px] md:min-h-[250px] flex flex-col gap-4">
                             {/* Temperature Plot */}
                             <div className="flex-1 min-h-0">
                                 <h3 className="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">Temperature</h3>

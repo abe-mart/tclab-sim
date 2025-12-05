@@ -32,7 +32,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ Q1, Q2, setQ1, setQ2
                         <span>Power Output</span>
                         <span className="font-mono text-red-300">{Q1.toFixed(0)}%</span>
                     </div>
-                    <div className="relative h-6 flex items-center">
+                    <div className="relative h-10 flex items-center">
                         <input
                             type="range"
                             min="0"
@@ -41,10 +41,11 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ Q1, Q2, setQ1, setQ2
                             value={Q1}
                             onChange={(e) => setQ1(Number(e.target.value))}
                             disabled={disabled}
-                            className={`w-full h-2 bg-slate-700/50 rounded-lg appearance-none cursor-pointer accent-red-500 z-10 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`w-full h-10 bg-transparent rounded-lg appearance-none cursor-pointer accent-red-500 z-10 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         />
+                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-3 bg-slate-700/50 rounded-lg pointer-events-none" />
                         <div
-                            className="absolute left-0 h-2 bg-gradient-to-r from-red-900/50 to-red-500 rounded-lg pointer-events-none"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-gradient-to-r from-red-900/50 to-red-500 rounded-lg pointer-events-none"
                             style={{ width: `${Q1}%` }}
                         />
                     </div>
@@ -69,7 +70,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ Q1, Q2, setQ1, setQ2
                         <span>Power Output</span>
                         <span className="font-mono text-blue-300">{Q2.toFixed(0)}%</span>
                     </div>
-                    <div className="relative h-6 flex items-center">
+                    <div className="relative h-10 flex items-center">
                         <input
                             type="range"
                             min="0"
@@ -78,10 +79,11 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ Q1, Q2, setQ1, setQ2
                             value={Q2}
                             onChange={(e) => setQ2(Number(e.target.value))}
                             disabled={disabled}
-                            className={`w-full h-2 bg-slate-700/50 rounded-lg appearance-none cursor-pointer accent-blue-500 z-10 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            className={`w-full h-10 bg-transparent rounded-lg appearance-none cursor-pointer accent-blue-500 z-10 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                         />
+                        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-3 bg-slate-700/50 rounded-lg pointer-events-none" />
                         <div
-                            className="absolute left-0 h-2 bg-gradient-to-r from-blue-900/50 to-blue-500 rounded-lg pointer-events-none"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 h-3 bg-gradient-to-r from-blue-900/50 to-blue-500 rounded-lg pointer-events-none"
                             style={{ width: `${Q2}%` }}
                         />
                     </div>
